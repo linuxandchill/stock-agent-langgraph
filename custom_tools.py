@@ -105,18 +105,6 @@ async def scrape_url(ticker: str, statement_type: str = None) -> str:
     Returns:
         str: The scraped content in markdown format
     """
-    profile_dir = "/Users/john/warren/warren/browser_profile"
-    lock_file = f"{profile_dir}/SingletonLock"
-    if os.path.exists(lock_file):
-        os.remove(lock_file)
-    
-    browser_config = BrowserConfig(
-        browser_type="chromium",
-        headless=True,
-        use_managed_browser=True,
-        verbose=True,
-        user_data_dir=profile_dir
-    )
     
     # Construct URL based on statement_type
     if statement_type == "income statement" or statement_type == "income-statement" or statement_type is None:
@@ -128,7 +116,7 @@ async def scrape_url(ticker: str, statement_type: str = None) -> str:
     else:
         url = f"https://stockanalysis.com/stocks/{ticker}/financials/{statement_type}/"
   
-    async with AsyncWebCrawler(config=browser_config) as crawler:
+    async with AsyncWebCrawler() as crawler:
         result = await crawler.arun(url=url)
         return result.markdown
 

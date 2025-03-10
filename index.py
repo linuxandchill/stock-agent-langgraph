@@ -4,8 +4,6 @@ import time
 import random
 import asyncio
 import threading
-import whisper
-import sounddevice as sd
 from typing import List
 import operator
 from dotenv import load_dotenv
